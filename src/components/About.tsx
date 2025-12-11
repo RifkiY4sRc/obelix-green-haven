@@ -69,7 +69,7 @@ const About = () => {
             { number: "500+", label: "Wahana Seru" },
             { number: "10+", label: "Spot Foto" },
             { number: "15+", label: "Menu Kuliner" },
-            { number: "1000+", label: "Pengunjung/Hari" },
+            { number: "350+", label: "Pengunjung/Hari" },
           ].map((stat, index) => (
             <div key={stat.label} className="text-center">
               <p className="font-heading text-4xl md:text-5xl font-bold text-primary mb-2">
