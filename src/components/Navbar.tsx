@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Leaf } from "lucide-react";
+import { Menu, X } from "lucide-react";
+import logoIcon from "@/assets/icon.png";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -33,13 +34,11 @@ const Navbar = () => {
       <div className="container-wide flex items-center justify-between">
         {/* Logo */}
         <a href="#beranda" className="flex items-center gap-2 group">
-          <div className={`p-2 rounded-full transition-all duration-300 ${
-            isScrolled ? "bg-primary" : "bg-primary-foreground/20"
-          }`}>
-            <Leaf className={`w-6 h-6 transition-colors duration-300 ${
-              isScrolled ? "text-primary-foreground" : "text-primary-foreground"
-            }`} />
-          </div>
+          <img 
+            src={logoIcon} 
+            alt="Obelix Village Logo" 
+            className="w-10 h-10 rounded-full object-cover"
+          />
           <div>
             <span className={`font-heading text-xl font-bold tracking-tight transition-colors duration-300 ${
               isScrolled ? "text-primary" : "text-primary-foreground"
