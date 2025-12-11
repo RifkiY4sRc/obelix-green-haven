@@ -54,7 +54,7 @@ const Hero = () => {
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button variant="hero" size="xl">
-              Jelajahi Sekarang
+              Chat Sekarang
             </Button>
             <Button variant="heroOutline" size="xl">
               Lihat Galeri
