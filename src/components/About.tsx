@@ -66,7 +66,7 @@ const About = () => {
         {/* Stats */}
         <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8">
           {[
-            { number: "5+", label: "Wahana Seru" },
+            { number: "500+", label: "Wahana Seru" },
             { number: "10+", label: "Spot Foto" },
             { number: "15+", label: "Menu Kuliner" },
             { number: "1000+", label: "Pengunjung/Hari" },
