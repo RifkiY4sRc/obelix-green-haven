@@ -17,9 +17,9 @@ const RatingSection = () => {
     };
 
     return (
-        <div className="flex-1 flex flex-col">
+        <div className="flex-1 flex flex-col overflow-hidden">
             {/* Header */}
-            <div className="bg-gradient-to-r from-[#f0fdf4] to-[#f0fdf4] border-b border-gray-200 px-6 py-4">
+            <div className="bg-gradient-to-r from-[#f0fdf4] to-[#f0fdf4] border-b border-gray-200 px-6 py-4 flex items-center justify-between">
                 <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-[#00c74f] rounded-full flex items-center justify-center">
                         <BarChart3 className="w-5 h-5 text-white" />
@@ -29,13 +29,17 @@ const RatingSection = () => {
                         <p className="text-xs text-[#00c74f]">Berikan penilaian Anda</p>
                     </div>
                 </div>
+                <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 bg-[#00c74f] rounded-full animate-pulse"></div>
+                    <span className="text-sm text-[#00c74f] font-medium">Online</span>
+                </div>
             </div>
 
             {/* Content */}
             <div className="flex-1 overflow-y-auto p-6 bg-gradient-to-b from-white to-gray-50">
                 <div className="max-w-3xl mx-auto">
                     {/* Star Rating */}
-                    <div className="flex justify-center gap-2 mb-6">
+                    <div className="flex justify-center gap-1 sm:gap-2 mb-6">
                         {[1, 2, 3, 4, 5].map((star) => (
                             <button
                                 key={star}
@@ -43,10 +47,10 @@ const RatingSection = () => {
                                 onClick={() => setRating(star)}
                                 onMouseEnter={() => setHoveredRating(star)}
                                 onMouseLeave={() => setHoveredRating(0)}
-                                className="transition-transform hover:scale-110"
+                                className="transition-transform hover:scale-110 p-1"
                             >
                                 <Star
-                                    className={`w-16 h-16 ${star <= (hoveredRating || rating)
+                                    className={`w-10 h-10 sm:w-16 sm:h-16 ${star <= (hoveredRating || rating)
                                             ? "text-yellow-400 fill-yellow-400"
                                             : "text-gray-300"
                                         }`}

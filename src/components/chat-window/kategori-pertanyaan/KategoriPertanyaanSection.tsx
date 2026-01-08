@@ -108,28 +108,32 @@ const KategoriPertanyaanSection = () => {
     };
 
     return (
-        <div className="flex-1 flex flex-col">
+        <div className="flex-1 flex flex-col overflow-hidden">
             {/* Header */}
-            <div className="bg-gradient-to-r from-[#f0fdf4] to-[#f0fdf4] border-b border-gray-200 px-6 py-4">
+            <div className="bg-gradient-to-r from-[#f0fdf4] to-[#f0fdf4] border-b border-gray-200 px-6 py-4 flex items-center justify-between">
                 <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-[#00c74f] rounded-full flex items-center justify-center">
                         <Grid2X2 className="w-5 h-5 text-white" />
                     </div>
                     <div>
                         <h2 className="font-bold text-gray-800">Kategori Pertanyaan</h2>
-                        <p className="text-xs text-[#00c74f]">Pilih kategori untuk melihat pertanyaan umum</p>
+                        <p className="text-xs text-[#00c74f]">Pilih kategori</p>
                     </div>
+                </div>
+                <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 bg-[#00c74f] rounded-full animate-pulse"></div>
+                    <span className="text-sm text-[#00c74f] font-medium">Online</span>
                 </div>
             </div>
 
             {/* Category Buttons */}
-            <div className="px-6 py-4 bg-white border-b border-gray-200">
-                <div className="flex justify-between gap-3">
+            <div className="bg-white border-b border-gray-200">
+                <div className="flex gap-3 overflow-x-auto py-4 px-6 scrollbar-hide">
                     {categories.map((category) => (
                         <button
                             key={category.id}
                             onClick={() => setActiveCategory(category.id)}
-                            className={`flex items-center gap-2 px-6 py-2 rounded-lg text-sm transition-all ${activeCategory === category.id
+                            className={`flex-shrink-0 flex items-center gap-2 px-6 py-2 rounded-lg text-sm transition-all whitespace-nowrap ${activeCategory === category.id
                                     ? "bg-[#f0fdf4] text-[#00c74f] font-bold shadow-md"
                                     : "bg-gray-100 text-gray-600 hover:bg-gray-200 font-medium"
                                 }`}
