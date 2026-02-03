@@ -1,20 +1,57 @@
 import { Bug } from "lucide-react";
 import { useState } from "react";
+import { feedbackService } from "@/services/feedbackService";
+import { useToast } from "@/hooks/use-toast";
+import SuccessModal from "../SuccessModal";
 
 const LaporBugSection = () => {
-    const [feedback, setFeedback] = useState("");
+    const [description, setDescription] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [showSuccess, setShowSuccess] = useState(false);
+    const { toast } = useToast();
 
-    const handleSubmit = () => {
-        if (feedback.trim()) {
-            // TODO: Implement backend integration
-            console.log("Feedback:", feedback);
-            alert("Terima kasih! Feedback Anda telah diterima.");
-            setFeedback("");
+    const handleSubmit = async () => {
+        // Validation
+        if (!description.trim()) {
+            toast({
+                title: "Deskripsi diperlukan",
+                description: "Silakan jelaskan kendala yang Anda alami",
+                variant: "destructive",
+            });
+            return;
+        }
+
+        setLoading(true);
+
+        try {
+            const result = await feedbackService.submitBugReport({
+                description: description.trim(),
+            });
+
+            if (result.success) {
+                setShowSuccess(true);
+                // Reset form
+                setDescription("");
+            } else {
+                toast({
+                    title: "Gagal mengirim laporan",
+                    description: result.error,
+                    variant: "destructive",
+                });
+            }
+        } catch (error) {
+            toast({
+                title: "Terjadi kesalahan",
+                description: "Silakan coba lagi nanti",
+                variant: "destructive",
+            });
+        } finally {
+            setLoading(false);
         }
     };
 
     return (
-        <div className="flex-1 flex flex-col">
+        <div className="flex-1 flex flex-col relative">
             {/* Header */}
             <div className="bg-gradient-to-r from-[#f0fdf4] to-[#f0fdf4] border-b border-gray-200 px-6 py-4">
                 <div className="flex items-center gap-3">
@@ -30,31 +67,42 @@ const LaporBugSection = () => {
 
             {/* Content */}
             <div className="flex-1 overflow-y-auto p-6 bg-gradient-to-b from-white to-gray-50">
-                <div className="max-w-3xl mx-auto">
-                    <h3 className="text-sm font-medium text-gray-700 mb-4">
+                <div className="max-w-3xl mx-auto space-y-4">
+                    <h3 className="text-sm font-medium text-gray-700">
                         Kendala Apa yang Anda Alami ketika Menggunakan Chatbot
                     </h3>
 
-                    <div className="bg-white rounded-2xl border-2 border-gray-200 p-4 mb-4">
+                    {/* Description */}
+                    <div className="bg-white rounded-2xl border-2 border-gray-200 p-4">
                         <textarea
-                            value={feedback}
-                            onChange={(e) => setFeedback(e.target.value)}
-                            placeholder="Jelaskan kendala yang kalian alami..."
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                            placeholder="Jelaskan kendala yang Anda alami secara detail..."
                             rows={12}
                             className="w-full resize-none focus:outline-none text-sm text-gray-700 placeholder:text-gray-400"
+                            disabled={loading}
                         />
                     </div>
 
+                    {/* Submit Button */}
                     <div className="flex justify-end">
                         <button
                             onClick={handleSubmit}
-                            className="bg-[#00c74f] hover:bg-[#00b045] text-white px-8 py-2 rounded-lg transition-colors font-medium text-sm"
+                            disabled={loading}
+                            className="bg-[#00c74f] hover:bg-[#00b045] disabled:bg-gray-300 disabled:cursor-not-allowed text-white px-8 py-2 rounded-lg transition-colors font-medium text-sm"
                         >
-                            Kirim
+                            {loading ? "Mengirim..." : "Kirim"}
                         </button>
                     </div>
                 </div>
             </div>
+
+            <SuccessModal 
+                isOpen={showSuccess}
+                onClose={() => setShowSuccess(false)}
+                title="Laporan Terkirim"
+                description="Terima kasih atas laporan Anda. Tim kami akan segera meninjaunya."
+            />
         </div>
     );
 };
